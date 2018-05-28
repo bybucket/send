@@ -2,3 +2,5 @@ dist
 assets
 firefox
 coverage
+server
+app

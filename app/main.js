@@ -44,7 +44,7 @@ app.use((state, emitter) => {
   });
 });
 
-app.use(metrics);
+// app.use(metrics);
 app.use(fileManager);
 app.use(dragManager);
 app.use(experiments);

@@ -7,6 +7,12 @@ module.exports = async function(req, res) {
   try {
     const meta = req.meta;
     const contentLength = await storage.length(id);
+    const hasSetPasswd = await storage.hasPasswd(id);
+
+    if (hasPasswd && !meta.password) {
+      res.sendStatus(403);
+    }
+
     res.writeHead(200, {
       'Content-Disposition': 'attachment',
       'Content-Type': 'application/octet-stream',
