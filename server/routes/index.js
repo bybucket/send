@@ -1,20 +1,21 @@
 const express = require('express');
-const busboy = require('connect-busboy');
+// const busboy = require('connect-busboy');
 const helmet = require('helmet');
 const storage = require('../storage');
 const config = require('../config');
 const auth = require('../middleware/auth');
 const owner = require('../middleware/owner');
 const language = require('../middleware/language');
+const finder = require('../middleware/finder');
 const pages = require('./pages');
 
 const IS_DEV = config.env === 'development';
 const ID_REGEX = '([0-9a-fA-F]{10})';
-const uploader = busboy({
-  limits: {
-    fileSize: config.max_file_size
-  }
-});
+// const uploader = busboy({
+//   limits: {
+//     fileSize: config.max_file_size
+//   }
+// });
 
 module.exports = function(app) {
   app.use(helmet());
@@ -53,7 +54,7 @@ module.exports = function(app) {
   });
   app.use(express.json());
   app.get('/', language, pages.index);
-  app.get('/legal', language, pages.legal);
+  // app.get('/legal', language, pages.legal);
   app.get('/jsconfig.js', require('./jsconfig'));
   app.get(`/share/:id${ID_REGEX}`, language, pages.blank);
   app.get(`/download/:id${ID_REGEX}`, language, pages.download);
@@ -62,11 +63,12 @@ module.exports = function(app) {
   app.get(`/api/download/:id${ID_REGEX}`, auth, require('./download'));
   app.get(`/api/exists/:id${ID_REGEX}`, require('./exists'));
   app.get(`/api/metadata/:id${ID_REGEX}`, auth, require('./metadata'));
-  app.post('/api/upload', uploader, require('./upload'));
+  // app.post('/api/upload', uploader, require('./upload'));
   app.post(`/api/delete/:id${ID_REGEX}`, owner, require('./delete'));
-  app.post(`/api/password/:id${ID_REGEX}`, owner, require('./password'));
-  app.post(`/api/params/:id${ID_REGEX}`, owner, require('./params'));
+  // app.post(`/api/password/:id${ID_REGEX}`, owner, require('./password'));
+  // app.post(`/api/params/:id${ID_REGEX}`, owner, require('./params'));
   app.post(`/api/info/:id${ID_REGEX}`, owner, require('./info'));
+  app.post('/api/share', finder, require('./share'));
 
   app.get('/__version__', function(req, res) {
     res.sendFile(require.resolve('../../dist/version.json'));
