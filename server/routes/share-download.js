@@ -3,13 +3,13 @@ const storage = require('../storage');
 const config = require('../config');
 const mozlog = require('../log');
 
-const log = mozlog('send.sharelink');
+const log = mozlog('send.shareDl');
 
 module.exports = async function(req, res) {
   const { fileId } = req.params;
-  const { hasSetPasswd, ttl, dLimit, passwd } = await storage.get(fileId);
+  const { hasPasswd, ttl, dLimit, passwd } = await storage.get(fileId);
 
-  if (hasSetPasswd && passwd !== req.params.passwd) {
+  if (hasPasswd && passwd !== req.params.passwd) {
     return res.json({
       msg: 'password wrong'
     });
@@ -39,8 +39,7 @@ module.exports = async function(req, res) {
   res.writeHead(200, {
     'Content-Disposition': 'attachment',
     'Content-Type': 'application/octet-stream',
-    'Content-Length': contentLength,
-    'WWW-Authenticate': `send-v1 ${req.nonce}`
+    'Content-Length': contentLength
   });
 
   const file_stream = storage.get(id);

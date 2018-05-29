@@ -3,7 +3,7 @@ const storage = require('../storage');
 const config = require('../config');
 const mozlog = require('../log');
 
-const log = mozlog('send.sharelink');
+const log = mozlog('send.shareLink');
 
 module.exports = function(req, res) {
   const newId = crypto.randomBytes(5).toString('hex');
