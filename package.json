@@ -126,6 +126,7 @@
     "fluent": "^0.6.3",
     "fluent-langneg": "^0.1.0",
     "helmet": "^3.12.0",
+    "mime-types": "^2.1.18",
     "mkdirp": "^0.5.1",
     "mozlog": "^2.2.0",
     "raven": "^2.4.2",

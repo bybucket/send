@@ -15,7 +15,6 @@ module.exports = function(state, pageAction) {
 
   const info = html`
     <div id="dl-file"
-      data-nonce="${fileInfo.nonce}"
       data-requires-password="${fileInfo.requiresPassword}"></div>`;
   if (!pageAction) {
     return info;

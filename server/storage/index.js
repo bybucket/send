@@ -20,18 +20,17 @@ class DB {
     return Math.ceil(result) * 1000;
   }
 
-  length(id) {
-    return this.storage.length(id);
+  length({ filename }) {
+    return this.storage.length(filename);
   }
 
-  get(id) {
-    return this.storage.getStream(id);
+  get({ filename }) {
+    return this.storage.getStream(filename);
   }
 
-  async set(id, file, meta) {
-    await this.storage.set(id, file);
+  set(id, meta, ttl) {
     this.redis.hmset(id, meta);
-    this.redis.expire(id, this.expireSeconds);
+    this.redis.expire(id, ttl || this.expireSeconds);
   }
 
   setField(id, key, value) {
@@ -40,7 +39,6 @@ class DB {
 
   del(id) {
     this.redis.del(id);
-    return this.storage.del(id);
   }
 
   async ping() {

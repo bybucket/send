@@ -15,24 +15,20 @@ function parseNonce(header) {
   return header.split(' ')[1];
 }
 
-async function fetchWithAuth(url, params, keychain) {
+async function fetchWithAuth(url, params) {
   const result = {};
   params = params || {};
-  const h = await keychain.authHeader();
-  params.headers = new Headers({ Authorization: h });
   const response = await fetch(url, params);
   result.response = response;
   result.ok = response.ok;
-  const nonce = parseNonce(response.headers.get('WWW-Authenticate'));
-  result.shouldRetry = response.status === 401 && nonce !== keychain.nonce;
-  keychain.nonce = nonce;
+  result.shouldRetry = response.status === 401;
   return result;
 }
 
-async function fetchWithAuthAndRetry(url, params, keychain) {
-  const result = await fetchWithAuth(url, params, keychain);
+async function fetchWithAuthAndRetry(url, params) {
+  const result = await fetchWithAuth(url, params);
   if (result.shouldRetry) {
-    return fetchWithAuth(url, params, keychain);
+    return fetchWithAuth(url, params);
   }
   return result;
 }
@@ -62,22 +58,13 @@ export async function fileInfo(id, owner_token) {
   throw new Error(response.status);
 }
 
-export async function metadata(id, keychain) {
-  const result = await fetchWithAuthAndRetry(
-    `/api/metadata/${id}`,
-    { method: 'GET' },
-    keychain
-  );
+export async function metadata(id) {
+  const result = await fetchWithAuthAndRetry(`/api/metadata/${id}`, {
+    method: 'GET'
+  });
   if (result.ok) {
     const data = await result.response.json();
-    const meta = await keychain.decryptMetadata(b64ToArray(data.metadata));
-    return {
-      size: data.size,
-      ttl: data.ttl,
-      iv: meta.iv,
-      name: meta.name,
-      type: meta.type
-    };
+    return data;
   }
   throw new Error(result.response.status);
 }

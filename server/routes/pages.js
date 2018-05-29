@@ -10,25 +10,38 @@ function stripEvents(str) {
 
 module.exports = {
   index: function(req, res) {
-    res.send(stripEvents(routes.toString('/', state(req))));
+    res.send(
+      stripEvents(
+        routes.toString(
+          '/',
+          state(req)
+        )
+      )
+    );
   },
 
   blank: function(req, res) {
-    res.send(stripEvents(routes.toString('/blank', state(req))));
+    res.send(
+      stripEvents(
+        routes.toString(
+          '/blank',
+          state(req)
+        )
+      )
+    );
   },
 
   download: async function(req, res, next) {
     const id = req.params.id;
 
     try {
-      const { nonce, pwd } = await storage.metadata(id);
-      res.set('WWW-Authenticate', `send-v1 ${nonce}`);
+      const { pwd } = await storage.metadata(id);
       res.send(
         stripEvents(
           routes.toString(
             `/download/${req.params.id}`,
             Object.assign(state(req), {
-              fileInfo: { nonce, requiresPassword: +pwd }
+              fileInfo: { requiresPassword: !!pwd }
             })
           )
         )
@@ -50,10 +63,24 @@ module.exports = {
   },
 
   legal: function(req, res) {
-    res.send(stripEvents(routes.toString('/legal', state(req))));
+    res.send(
+      stripEvents(
+        routes.toString(
+          '/legal',
+          state(req)
+        )
+      )
+    );
   },
 
   notfound: function(req, res) {
-    res.status(404).send(stripEvents(routes.toString('/404', state(req))));
+    res.status(404).send(
+      stripEvents(
+        routes.toString(
+          '/404',
+          state(req)
+        )
+      )
+    );
   }
 };

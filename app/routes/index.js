@@ -45,12 +45,12 @@ function body(template) {
 }
 
 app.route('/', body(require('./home')));
-app.route('/share/:id', body(require('../pages/share')));
+// app.route('/share/:id', body(require('../pages/share')));
 app.route('/download/:id', body(download));
-app.route('/download/:id/:key', body(download));
+// app.route('/download/:id/:key', body(download));
 app.route('/completed', body(require('../pages/completed')));
 app.route('/unsupported/:reason', body(require('../pages/unsupported')));
-app.route('/legal', body(require('../pages/legal')));
+// app.route('/legal', body(require('../pages/legal')));
 app.route('/error', body(require('../pages/error')));
 app.route('/blank', body(require('../pages/blank')));
 app.route('*', body(require('../pages/notFound')));

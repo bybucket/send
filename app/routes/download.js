@@ -14,7 +14,6 @@ function getFileInfoFromDOM() {
     return null;
   }
   return {
-    nonce: el.getAttribute('data-nonce'),
     requiresPassword: !!+el.getAttribute('data-requires-password')
   };
 }
@@ -23,8 +22,6 @@ function createFileInfo(state) {
   const metadata = getFileInfoFromDOM();
   return {
     id: state.params.id,
-    secretKey: state.params.key,
-    nonce: metadata.nonce,
     requiresPassword: metadata.requiresPassword
   };
 }

@@ -2,15 +2,16 @@ const storage = require('../storage');
 
 module.exports = async function(req, res) {
   const id = req.params.id;
-  const meta = req.meta;
   try {
-    const size = await storage.length(id);
+    const metadata = await storage.metadata(id);
+    const size = await storage.length(metadata);
     const ttl = await storage.ttl(id);
     res.send({
-      metadata: meta.metadata,
-      finalDownload: meta.dl + 1 === meta.dlimit,
+      finalDownload: metadata.dl + 1 === metadata.dlimit,
       size,
-      ttl
+      ttl,
+      name: metadata.filename,
+      type: metadata.type
     });
   } catch (e) {
     res.sendStatus(404);

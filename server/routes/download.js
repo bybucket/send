@@ -4,16 +4,15 @@ const log = mozlog('send.download');
 
 module.exports = async function(req, res) {
   const id = req.params.id;
+  const meta = await storage.metadata(id);
   try {
-    const meta = req.meta;
-    const contentLength = await storage.length(id);
+    const contentLength = await storage.length(meta);
     res.writeHead(200, {
       'Content-Disposition': 'attachment',
       'Content-Type': 'application/octet-stream',
-      'Content-Length': contentLength,
-      'WWW-Authenticate': `send-v1 ${req.nonce}`
+      'Content-Length': contentLength
     });
-    const file_stream = storage.get(id);
+    const file_stream = storage.get(meta);
 
     file_stream.on('end', async () => {
       const dl = meta.dl + 1;
