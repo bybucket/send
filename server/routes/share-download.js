@@ -10,18 +10,18 @@ module.exports = async function(req, res) {
   const { hasSetPasswd, ttl, dLimit, passwd } = await storage.get(fileId);
 
   if (hasSetPasswd && passwd !== req.params.passwd) {
-    res.json({
+    return res.json({
       msg: 'password wrong'
     });
   }
 
   if (ttl <= 0) {
-    res.json({
+    return res.json({
       msg: 'expired'
     });
   }
   if (dLimit <= 0) {
-    res.json({
+    return res.json({
       msg: 'expired'
     });
   }
