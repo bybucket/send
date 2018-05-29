@@ -124,7 +124,7 @@ export function uploadFile(
   return upload;
 }
 
-function download(id, keychain, onprogress, canceller) {
+function download(id, onprogress, canceller) {
   const xhr = new XMLHttpRequest();
   canceller.oncancel = function() {
     xhr.abort();
@@ -132,10 +132,6 @@ function download(id, keychain, onprogress, canceller) {
   return new Promise(async function(resolve, reject) {
     xhr.addEventListener('loadend', function() {
       canceller.oncancel = function() {};
-      const authHeader = xhr.getResponseHeader('WWW-Authenticate');
-      if (authHeader) {
-        keychain.nonce = parseNonce(authHeader);
-      }
       if (xhr.status !== 200) {
         return reject(new Error(xhr.status));
       }
@@ -152,27 +148,26 @@ function download(id, keychain, onprogress, canceller) {
         onprogress([event.loaded, event.total]);
       }
     });
-    const auth = await keychain.authHeader();
     xhr.open('get', `/api/download/${id}`);
-    xhr.setRequestHeader('Authorization', auth);
+    // xhr.setRequestHeader('Authorization', auth);
     xhr.responseType = 'blob';
     xhr.send();
   });
 }
 
-async function tryDownload(id, keychain, onprogress, canceller, tries = 1) {
+async function tryDownload(id, onprogress, canceller, tries = 1) {
   try {
-    const result = await download(id, keychain, onprogress, canceller);
+    const result = await download(id, onprogress, canceller);
     return result;
   } catch (e) {
     if (e.message === '401' && --tries > 0) {
-      return tryDownload(id, keychain, onprogress, canceller, tries);
+      return tryDownload(id, onprogress, canceller, tries);
     }
     throw e;
   }
 }
 
-export function downloadFile(id, keychain, onprogress) {
+export function downloadFile(id, onprogress) {
   const canceller = {
     oncancel: function() {} // download() sets this
   };
@@ -181,6 +176,6 @@ export function downloadFile(id, keychain, onprogress) {
   }
   return {
     cancel,
-    result: tryDownload(id, keychain, onprogress, canceller, 2)
+    result: tryDownload(id, onprogress, canceller, 2)
   };
 }

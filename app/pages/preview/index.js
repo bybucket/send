@@ -25,7 +25,6 @@ module.exports = function(state, pageAction) {
         <span>${title}</span>
         <span>${' ' + size}</span>
       </div>
-      <div class="description">${state.translate('downloadMessage')}</div>
       <img
         src="${assets.get('illustration_download.svg')}"
         title="${state.translate('downloadAltText')}"/>

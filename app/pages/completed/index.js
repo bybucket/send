@@ -13,9 +13,6 @@ module.exports = function(state, emit) {
       <div class="progressSection">
         <div class="progressSection__text"></div>
       </div>
-      <a class="link link--action"
-        href="/"
-        onclick=${sendNew}>${state.translate('sendYourFilesLink')}</a>
     </div>`;
 
   async function sendNew(e) {

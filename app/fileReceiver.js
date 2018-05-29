@@ -47,21 +47,12 @@ export default class FileReceiver extends Nanobus {
 
   async download(noSave = false) {
     this.state = 'downloading';
-    this.downloadRequest = await downloadFile(
-      this.fileInfo.id,
-      this.keychain,
-      p => {
-        this.progress = p;
-        this.emit('progress');
-      }
-    );
+    this.downloadRequest = await downloadFile(this.fileInfo.id, p => {
+      this.progress = p;
+      this.emit('progress');
+    });
     try {
-      const ciphertext = await this.downloadRequest.result;
-      this.downloadRequest = null;
-      this.msg = 'decryptingFile';
-      this.state = 'decrypting';
-      this.emit('decrypting');
-      const plaintext = await this.keychain.decryptFile(ciphertext);
+      const plaintext = await this.downloadRequest.result;
       if (!noSave) {
         await saveFile({
           plaintext,
