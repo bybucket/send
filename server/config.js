@@ -1,7 +1,5 @@
 const convict = require('convict');
-// const { tmpdir } = require('os');
 const path = require('path');
-// const { randomBytes } = require('crypto');
 
 const conf = convict({
   s3_bucket: {
@@ -72,7 +70,6 @@ const conf = convict({
   },
   file_dir: {
     format: 'String',
-    // default: `${tmpdir()}${path.sep}send-${randomBytes(4).toString('hex')}`,
     default: path.resolve(__dirname, '../.tmp'),
     env: 'FILE_DIR'
   }

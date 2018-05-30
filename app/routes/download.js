@@ -13,8 +13,9 @@ function getFileInfoFromDOM() {
   if (!el) {
     return null;
   }
+  console.log(el.getAttribute('data-requires-password'));
   return {
-    requiresPassword: !!+el.getAttribute('data-requires-password')
+    requiresPassword: new Boolean(el.getAttribute('data-requires-password'))
   };
 }
 

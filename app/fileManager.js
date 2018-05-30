@@ -67,7 +67,7 @@ export default function(state, emitter) {
       state.storage.remove(file.id);
       await file.del();
     } catch (e) {
-      state.raven.captureException(e);
+      console.error(e);
     }
   });
 
@@ -106,7 +106,6 @@ export default function(state, emitter) {
       } else {
         // eslint-disable-next-line no-console
         console.error(err);
-        state.raven.captureException(err);
         emitter.emit('pushState', '/error');
       }
     } finally {
@@ -133,11 +132,11 @@ export default function(state, emitter) {
     render();
   });
 
-  emitter.on('getMetadata', async () => {
+  emitter.on('getMetadata', async ({ password } = {}) => {
     const file = state.fileInfo;
     const receiver = new FileReceiver(file);
     try {
-      await receiver.getMetadata();
+      await receiver.getMetadata(password);
       state.transfer = receiver;
     } catch (e) {
       if (e.message === '401') {
@@ -179,7 +178,6 @@ export default function(state, emitter) {
         state.transfer = null;
         const location = err.message === '404' ? '/404' : '/error';
         if (location === '/error') {
-          state.raven.captureException(err);
         }
         emitter.emit('pushState', location);
       }

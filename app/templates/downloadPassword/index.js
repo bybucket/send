@@ -56,7 +56,6 @@ module.exports = function(state, emit) {
     if (password.length > 0) {
       document.getElementById('password-btn').disabled = true;
       state.fileInfo.url = window.location.href;
-      state.fileInfo.password = password;
       emit('getMetadata', { password });
     }
     return false;

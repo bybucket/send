@@ -15,9 +15,12 @@ function parseNonce(header) {
   return header.split(' ')[1];
 }
 
-async function fetchWithAuth(url, params) {
+async function fetchWithAuth(url, password, params) {
   const result = {};
   params = params || {};
+  if (password) {
+    params.headers = new Headers({ Authorization: password });
+  }
   const response = await fetch(url, params);
   result.response = response;
   result.ok = response.ok;
@@ -25,10 +28,10 @@ async function fetchWithAuth(url, params) {
   return result;
 }
 
-async function fetchWithAuthAndRetry(url, params) {
-  const result = await fetchWithAuth(url, params);
+async function fetchWithAuthAndRetry(url, password, params) {
+  const result = await fetchWithAuth(url, password, params);
   if (result.shouldRetry) {
-    return fetchWithAuth(url, params);
+    return fetchWithAuth(url, password, params);
   }
   return result;
 }
@@ -58,8 +61,8 @@ export async function fileInfo(id, owner_token) {
   throw new Error(response.status);
 }
 
-export async function metadata(id) {
-  const result = await fetchWithAuthAndRetry(`/api/metadata/${id}`, {
+export async function metadata(id, password) {
+  const result = await fetchWithAuthAndRetry(`/api/metadata/${id}`, password, {
     method: 'GET'
   });
   if (result.ok) {
