@@ -2,8 +2,6 @@ const choo = require('choo');
 const html = require('choo/html');
 const nanotiming = require('nanotiming');
 const download = require('./download');
-const header = require('../templates/header');
-const footer = require('../templates/footer');
 const fxPromo = require('../templates/fxPromo');
 
 nanotiming.disabled = true;
@@ -19,22 +17,15 @@ function body(template) {
   return function(state, emit) {
     const b = html`<body>
       ${banner(state, emit)}
-      ${header(state)}
       <main class="main">
         <noscript>
           <div class="noscript">
             <h2>${state.translate('javascriptRequired')}</h2>
-            <p>
-              <a class="link" href="https://github.com/mozilla/send/blob/master/docs/faq.md#why-does-firefox-send-require-javascript">
-              ${state.translate('whyJavascript')}
-              </a>
-            </p>
             <p>${state.translate('enableJavascript')}</p>
           </div>
         </noscript>
         ${template(state, emit)}
       </main>
-      ${footer(state)}
     </body>`;
     if (state.layout) {
       // server side only

@@ -104,7 +104,7 @@ addPasswordButton = Add password
 changePasswordButton = Change
 passwordTryAgain = Incorrect password. Try again.
 reportIPInfringement = Report IP Infringement
-javascriptRequired = Firefox Send requires JavaScript
+javascriptRequired = This website requires JavaScript
 whyJavascript = Why does Firefox Send require JavaScript?
 enableJavascript = Please enable JavaScript and try again.
 # A short representation of a countdown timer containing the number of hours and minutes remaining as digits, example "13h 47m"

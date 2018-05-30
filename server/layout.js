@@ -14,20 +14,6 @@ module.exports = function(state, body = '') {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta property="og:title" content="${state.title}"/>
-    <meta name="twitter:title" content="${state.title}"/>
-    <meta name="description" content="${state.description}"/>
-    <meta property="og:description" content="${state.description}"/>
-    <meta name="twitter:description" content="${state.description}"/>
-    <meta name="twitter:card" content="summary"/>
-    <meta property="og:image" content="${state.baseUrl}${assets.get(
-    'send-fb.jpg'
-  )}"/>
-    <meta name="twitter:image" content="${state.baseUrl}${assets.get(
-    'send-twitter.jpg'
-  )}"/>
-    <meta property="og:url" content="${state.baseUrl}"/>
-
     <title>${state.title}</title>
 
     <link rel="stylesheet" type="text/css" href="${assets.get('style.css')}" />

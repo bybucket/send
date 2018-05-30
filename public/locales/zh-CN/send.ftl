@@ -102,7 +102,7 @@ addPasswordButton = 添加密码
 changePasswordButton = 更改
 passwordTryAgain = 密码不正确。请重试。
 reportIPInfringement = 举报知识产权侵权
-javascriptRequired = Firefox Send 需要 JavaScript
+javascriptRequired = 本网站需要 JavaScript
 whyJavascript = 为什么 Firefox Send 需要 JavaScript？
 enableJavascript = 请启用 JavaScript 并重试。
 # A short representation of a countdown timer containing the number of hours and minutes remaining as digits, example "13h 47m"
