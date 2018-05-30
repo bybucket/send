@@ -2,6 +2,7 @@
 title = Firefox Send
 siteSubtitle = 網頁實驗
 siteFeedback = 意見回饋
+welcomeHeader = 歡迎
 uploadPageHeader = 私密、有加密的檔案分享服務
 uploadPageExplainer = 透過安全、隱私、加密過的管道來傳送檔案，而且鏈結會自動過期，可確保您的東西不會在網路上無限停留。
 uploadPageLearnMore = 了解更多

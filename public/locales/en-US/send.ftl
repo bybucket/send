@@ -2,6 +2,7 @@
 title = Firefox Send
 siteSubtitle = web experiment
 siteFeedback = Feedback
+welcomeHeader = Welcome
 uploadPageHeader = Private, Encrypted File Sharing
 uploadPageExplainer = Send files through a safe, private, and encrypted link that automatically expires to ensure your stuff does not remain online forever.
 uploadPageLearnMore = Learn more

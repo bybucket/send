@@ -56,18 +56,18 @@ module.exports = function(app) {
   app.get('/', language, pages.index);
   // app.get('/legal', language, pages.legal);
   app.get('/jsconfig.js', require('./jsconfig'));
-  app.get(`/share/:id${ID_REGEX}`, pages.blank);
+  // app.get(`/share/:id${ID_REGEX}`, pages.blank);
   app.get(`/download/:id${ID_REGEX}`, pages.download);
   app.get('/completed', language, pages.blank);
   app.get('/unsupported/:reason', language, pages.unsupported);
   app.get(`/api/download/:id${ID_REGEX}`, auth, require('./download'));
-  app.get(`/api/exists/:id${ID_REGEX}`, require('./exists'));
+  // app.get(`/api/exists/:id${ID_REGEX}`, require('./exists'));
   app.get(`/api/metadata/:id${ID_REGEX}`, require('./metadata'));
   // app.post('/api/upload', uploader, require('./upload'));
   // app.post(`/api/delete/:id${ID_REGEX}`, owner, require('./delete'));
   // app.post(`/api/password/:id${ID_REGEX}`, owner, require('./password'));
   // app.post(`/api/params/:id${ID_REGEX}`, owner, require('./params'));
-  app.post(`/api/info/:id${ID_REGEX}`, owner, require('./info'));
+  // app.post(`/api/info/:id${ID_REGEX}`, owner, require('./info'));
   app.post('/api/share', finder, require('./share'));
 
   app.get('/__version__', function(req, res) {

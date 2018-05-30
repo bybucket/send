@@ -2,6 +2,7 @@
 title = Firefox Send
 siteSubtitle = Web 实验
 siteFeedback = 反馈
+welcomeHeader = 欢迎
 uploadPageHeader = 私密、安全的文件分享服务
 uploadPageExplainer = 通过安全、私密且受加密的链接发送文件，链接到期后文件将从网上彻底抹除。
 uploadPageLearnMore = 详细了解
