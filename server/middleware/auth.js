@@ -6,7 +6,6 @@ module.exports = async function(req, res, next) {
   const metadata = await storage.metadata(id);
 
   req.authorized = true;
-
   if (id && metadata) {
     if (metadata.pwd && req.header('Authorization')) {
       const pwd = req.header('Authorization');

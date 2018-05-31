@@ -62,7 +62,7 @@ module.exports = function(app) {
   app.get('/unsupported/:reason', language, pages.unsupported);
   app.get(`/api/download/:id${ID_REGEX}`, auth, require('./download'));
   // app.get(`/api/exists/:id${ID_REGEX}`, require('./exists'));
-  app.get(`/api/metadata/:id${ID_REGEX}`, require('./metadata'));
+  app.get(`/api/metadata/:id${ID_REGEX}`, auth, require('./metadata'));
   // app.post('/api/upload', uploader, require('./upload'));
   // app.post(`/api/delete/:id${ID_REGEX}`, owner, require('./delete'));
   // app.post(`/api/password/:id${ID_REGEX}`, owner, require('./password'));

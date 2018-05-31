@@ -127,7 +127,7 @@ export function uploadFile(
   return upload;
 }
 
-function download(id, onprogress, canceller) {
+function download(id, password, onprogress, canceller) {
   const xhr = new XMLHttpRequest();
   canceller.oncancel = function() {
     xhr.abort();
@@ -152,25 +152,27 @@ function download(id, onprogress, canceller) {
       }
     });
     xhr.open('get', `/api/download/${id}`);
-    // xhr.setRequestHeader('Authorization', auth);
+    if (password) {
+      xhr.setRequestHeader('Authorization', password);
+    }
     xhr.responseType = 'blob';
     xhr.send();
   });
 }
 
-async function tryDownload(id, onprogress, canceller, tries = 1) {
+async function tryDownload(id, password, onprogress, canceller, tries = 1) {
   try {
-    const result = await download(id, onprogress, canceller);
+    const result = await download(id, password, onprogress, canceller);
     return result;
   } catch (e) {
     if (e.message === '401' && --tries > 0) {
-      return tryDownload(id, onprogress, canceller, tries);
+      return tryDownload(id, password, onprogress, canceller, tries);
     }
     throw e;
   }
 }
 
-export function downloadFile(id, onprogress) {
+export function downloadFile(id, password, onprogress) {
   const canceller = {
     oncancel: function() {} // download() sets this
   };
@@ -179,6 +181,6 @@ export function downloadFile(id, onprogress) {
   }
   return {
     cancel,
-    result: tryDownload(id, onprogress, canceller, 2)
+    result: tryDownload(id, password, onprogress, canceller, 2)
   };
 }
